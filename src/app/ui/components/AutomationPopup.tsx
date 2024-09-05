@@ -20,7 +20,7 @@ const AutomationPopup: React.FC<AutomationPopUpProps> = ({ onSave, onDiscard }) 
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg max-w-lg mx-auto">
+    <div className="p-4 absolute bg-white rounded-lg w-[600px] mx-auto">
       <h2 className="text-2xl text-center font-semibold text-black m-4">Automation Settings</h2>
       <div className='m-10'>
         

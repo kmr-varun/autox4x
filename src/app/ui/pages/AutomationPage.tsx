@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import AutomationSettingPanel from './AutomationSettingPanel';
 import TriggerSettings from './settings/TriggerSettings';
 import { InputData, Pipeline, Workflow } from '@/app/types/inputType';
@@ -14,6 +14,7 @@ import AutomationPopup from '../components/AutomationPopup';
 import { setSaveWorkflow } from '@/app/slices/setupSlice';
 import { Trigger, WorkflowState } from '@/app/types/workflowTypes';
 import { setWorkflowDetails } from '@/app/slices/workflowSlice';
+import Toaster, { ToasterRef } from '../components/Toaster/Toaster';
 
 export const workflowData: InputData = data;
 const workflows: Workflow = workflowData.workflow;
@@ -32,6 +33,8 @@ const AutomationPage: React.FC = () => {
   const selectActions = useSelector((state: RootState) => state.workflow.actions);
   const saveWorkflow = useSelector((state: RootState) => state.setup.saveWorkflow);
 
+  const toasterRef = useRef<ToasterRef>(null);
+
   const handleDiscard = () => {
     dispatch(setSaveWorkflow(false));
   }
@@ -42,6 +45,7 @@ const AutomationPage: React.FC = () => {
       desc: option.desc
     };
     dispatch(setWorkflowDetails(updatedDetails));
+    toasterRef?.current?.addToast("Your Automation has been successful saved", "success");
   }
 
 
@@ -67,13 +71,14 @@ const AutomationPage: React.FC = () => {
               <ActionSettings />
             }
             
-            
           </div>
           {
               saveWorkflow &&
               <AutomationPopup onSave={handleWorkflowSave} onDiscard={handleDiscard} />
             }
+            <Toaster />
         </div>
+        <Toaster ref={toasterRef} />
       </div>
       <Footer />
     </div>
@@ -81,3 +86,13 @@ const AutomationPage: React.FC = () => {
 };
 
 export default AutomationPage;
+
+
+
+
+
+
+
+
+
+
