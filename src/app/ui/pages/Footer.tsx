@@ -6,9 +6,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/Buttons/Button';
 import { workflowData } from './AutomationPage';
+import { setSaveWorkflow } from '@/app/slices/setupSlice';
 
 const Footer = () => {
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useDispatch();
     const workflow = useSelector(selectWorkflow);
     const conditions = useSelector(selectConditions);
     const actions = useSelector(selectActions);
@@ -47,39 +48,11 @@ const Footer = () => {
         }
     };
 
-    const updateData = async () => {
-        const data = {
-            ...workflow,
-            conditions: conditions,
-            actions: actions,
-        };
 
-        console.log(data);
-        try {
-            const response = await fetch('http://192.168.84.229:3500/workflow/66c5c2f7c0a6dd4f6ec00efb', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
 
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const result = await response.json();
-            alert('Update successful!');
-            console.log('Update successful:', result);
-        } catch (error) {
-            if (error instanceof Error) {
-                alert('Error updating data: ' + error.message);
-            } else {
-                alert('Unknown error occurred');
-            }
-            console.error('Error updating data:', error);
-        }
-    };
+    const handleSave = () => {
+        dispatch(setSaveWorkflow(true));
+    }
 
     return (
         <div className='space-x-4 absolute right-10 my-2 mx-8'>
@@ -91,13 +64,9 @@ const Footer = () => {
             <Button
                 text="Save"
                 variant="primary"
-                onClick={sendData}
+                onClick={handleSave}
             />
-            <Button
-                text="Update"
-                variant="secondary"
-                onClick={updateData}
-            />
+            
         </div>
     );
 };

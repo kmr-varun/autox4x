@@ -346,19 +346,7 @@ const Email: React.FC = () => {
   // };
 
 
-  const dispatch = useDispatch();
-  const handleSendEmail = () => {
-    
-
-    const updateAction = (index: number, updates: Partial<Action>) => {
-      dispatch(updateActionField({
-        index,
-        field: updates
-      }));
-    };
-
-    updateAction(0, {data: emailData});
-  };
+  
 
 
 
@@ -520,8 +508,27 @@ const Email: React.FC = () => {
     setChooseTemplateAnchorEl(null); // Close the dropdown
   };
 
+  const dispatch = useDispatch();
+  const handleSendEmail = () => {
+
+    const emaildata = {
+      to: toField,
+      subject: templateSubject,
+      message: editorContent
+    };
+    const updateAction = (index: number, updates: Partial<Action>) => {
+
+      dispatch(updateActionField({
+        index,
+        field: updates
+      }));
+    };
+
+    updateAction(0, { data: emaildata });
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen  ">
+    <div className="flex justify-center text-black items-center h-screen  ">
       <div className="w-[850px] h-[600px] bg-white rounded-lg p-6 relative shadow-lg  overflow-auto  ">
         <h1 className="text-lg mb-3 bg-black ps-6 pe-1 py-2 text-white not-italic truncate text-left  ">
           Send E-mail

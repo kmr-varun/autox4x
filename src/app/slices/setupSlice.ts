@@ -7,7 +7,8 @@ interface SetupState {
   setupPipeline: boolean; 
   setupCondition: boolean;
   setupAction: boolean;
-  setupPreview: boolean; 
+  setupPreview: boolean;
+  saveWorkflow: boolean;
 }
 
 const initialState: SetupState = {
@@ -15,7 +16,8 @@ const initialState: SetupState = {
   setupPipeline: false,
   setupCondition: false,
   setupAction: false,
-  setupPreview: false, // Initialize new boolean value
+  setupPreview: false,
+  saveWorkflow: false
 };
 
 // Create the slice
@@ -42,6 +44,9 @@ const setupSlice = createSlice({
     setSetupPreview(state, action: PayloadAction<boolean>) {
       state.setupPreview = action.payload;
     },
+    setSaveWorkflow(state, action: PayloadAction<boolean>) {
+      state.saveWorkflow = action.payload;
+    },
     clearSetupState(state) {
       return initialState;
     }
@@ -49,7 +54,7 @@ const setupSlice = createSlice({
 });
 
 // Export actions
-export const { setSetupTrigger,setSetupPipeline, setSetupCondition, setSetupAction, setSetupPreview, clearSetupState } = setupSlice.actions;
+export const { setSetupTrigger,setSetupPipeline, setSetupCondition, setSetupAction, setSetupPreview,setSaveWorkflow, clearSetupState } = setupSlice.actions;
 
 // Export reducer
 export default setupSlice.reducer;

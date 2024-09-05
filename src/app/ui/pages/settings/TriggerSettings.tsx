@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { AddFilled, CloseFilled, Save } from '@carbon/icons-react';
+import { AddFilled, ChevronLeft, CloseFilled, Save } from '@carbon/icons-react';
 import { useDispatch, useSelector } from 'react-redux';
-import ConditionDropdown from '../components/Dropdowns/ConditionDropdown';
-import OperatorDropdown from '../components/Dropdowns/OperatorDropdown';
-import PropertyDropdown from '../components/Dropdowns/PropertyDropdown';
-import IconButton from '../components/Buttons/IconButton';
-import ButtonGroup from '../components/Buttons/ButtonGroup';
+import ConditionDropdown from '../../components/Dropdowns/ConditionDropdown';
+import OperatorDropdown from '../../components/Dropdowns/OperatorDropdown';
+import PropertyDropdown from '../../components/Dropdowns/PropertyDropdown';
+import IconButton from '../../components/Buttons/IconButton';
+import ButtonGroup from '../../components/Buttons/ButtonGroup';
 import { addCondition, removeCondition } from '@/app/slices/workflowSlice';
 import { Condition } from '@/app/types/workflowTypes';
 import { setSetupCondition } from '@/app/slices/setupSlice';
 import { Pipeline } from '@/app/types/inputType';
 import { selectConditions, selectWorkflow } from '@/app/helpers/selectors';
-import TimeBound from './TimeBound';
+import TimeBound from '../TimeBound';
 
 interface TriggerSettingsProps {
   dropdownOptions: Pipeline[];
@@ -62,9 +62,16 @@ const TriggerSettings: React.FC<TriggerSettingsProps> = ({ dropdownOptions, hand
     return null;
   };
 
+  const handleBack = () => {
+    
+  }
+
   return (
-    <div className='noscroll p-8 w-full h-[700px] overflow-y-scroll'>
-      <div>
+    <div className='noscroll py-4 px-2 w-full h-[700px] overflow-y-scroll'>
+      <div onClick={handleBack}>
+        <ChevronLeft size={30} />
+      </div>
+      <div className='px-12'>
         <div className='text-xl text-[#848694] my-4'>Trigger Settings</div>
         <div>
           {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Save, ChevronDown } from '@carbon/icons-react'; // Adjust import path as needed
-import IconButton from '../components/Buttons/IconButton';
-import Email from './Email';
+import IconButton from '../../components/Buttons/IconButton';
+import Email from '../../components/ActionTemplates/Email';
 
 
 
