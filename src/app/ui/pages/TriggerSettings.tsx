@@ -11,10 +11,7 @@ import { Condition } from '@/app/types/workflowTypes';
 import { setSetupCondition } from '@/app/slices/setupSlice';
 import { Pipeline } from '@/app/types/inputType';
 import { selectConditions, selectWorkflow } from '@/app/helpers/selectors';
-import IntervalSetting from './TimeBound/DateArrives';
-import DateArrives from './TimeBound/DateArrives';
-import TimeInterval from './TimeBound/TimeInterval';
-import DatePassed from './TimeBound/DatePassed';
+import TimeBound from './TimeBound';
 
 interface TriggerSettingsProps {
   dropdownOptions: Pipeline[];
@@ -70,33 +67,26 @@ const TriggerSettings: React.FC<TriggerSettingsProps> = ({ dropdownOptions, hand
       <div>
         <div className='text-xl text-[#848694] my-4'>Trigger Settings</div>
         <div>
-        {
-          conditions.length > 0 ? conditions.map((condition: Condition, index) => (
-            <div key={index}>{condition.columnName +  ' ' + condition.operatorString +  (condition.fromValue != '' ?  condition.fromValue : ' from '
-              
-            )  +  ' to ' + condition.toValue}</div>
-          )) : (
-            <div></div>
-          )
-        }
+          {
+            conditions.length > 0 ? conditions.map((condition: Condition, index) => (
+              <div key={index}>{condition.columnName + ' ' + condition.operatorString + (condition.fromValue != '' ? condition.fromValue : ' from '
+
+              ) + ' to ' + condition.toValue}</div>
+            )) : (
+              <div></div>
+            )
+          }
         </div>
         <div className='text-3xl text-white my-2'>
-          {/* When a Status changes from <span className='text-[#4E4E58]'>something</span> to <span className='text-[#4E4E58]'>something</span> */}
-          { workflow.string != '' ?  workflow.string : 'Setup A Trigger' }
+          {workflow.string != '' ? workflow.string : 'Setup A Trigger'}
         </div>
-        <div className='text-[#848694] text-[15px]'>The trigger will fire when a {workflow.name}</div>
+        <div className='text-[#848694] text-[15px]'>The trigger will fire when a {workflow.trigger.name}</div>
 
         <div className='my-2 p-2'>
-          {workflow.trigger.type == 'datearrives' &&
-            <DateArrives />
-          }
-          {
-            workflow.trigger.type == 'timeinterval' &&
-            <TimeInterval />
-          }
-          {
-            workflow.trigger.type == 'datepassed' &&
-            <DatePassed />
+
+
+          {workflow.type == 'timebase' &&
+            <TimeBound timeType={workflow.trigger.type} />
           }
 
         </div>
@@ -105,7 +95,7 @@ const TriggerSettings: React.FC<TriggerSettingsProps> = ({ dropdownOptions, hand
           <div>
             {conditions.length > 0 ? conditions.map((condition, index) => (
               <div key={index} >
-                <div className='border border-[#848694] p-4 rounded-lg'>
+                <div className=' p-4 rounded-lg'>
                   <div className='flex my-2 flex-row justify-between'>
                     <div className='text-white my-2 text-base'>Conditions</div>
                     <button className='p-2'>

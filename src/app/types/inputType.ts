@@ -39,13 +39,7 @@ export interface Action {
   operation: string;
   parameter: string;
   setup: boolean;
-  data: Daum[];
-}
-
-export interface Daum {
-  name: string;
-  type: string;
-  value: string[];
+  data?: any;
 }
 
 export interface Integration2 {

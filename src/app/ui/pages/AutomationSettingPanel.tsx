@@ -17,48 +17,56 @@ const AutomationSettingPanel: React.FC<AutomationSettingPanelProps> = ({ workflo
   const workflow = useSelector(selectWorkflow);
   const actions = useSelector(selectActions);
 
-  const setupTrigger = useSelector((state: RootState) => state.setup.setupTrigger);
+  
   const setupCondition = useSelector((state: RootState) => state.setup.setupCondition);
+  const setupPipeline = useSelector((state: RootState) => state.setup.setupPipeline);
 
   return (
     <div className='flex h-full'>
       <div className='flex-1'>
-        <div>
-          <span className='text-3xl'>When</span><br />
-          <span className='text-xl text-[#848694]'>this happens</span>
-        </div>
-        <div className="py-5">
-          {workflow.trigger.name !== '' ? (
-            <StatusCard triggerLabel="Trigger" statusLabel={workflow.trigger.name} barColor="#95A4FC" statType={'trigger'} />
-          ) : (
-            <OptionsDropdown
-              title={workflow.trigger.name !== '' ? workflow.trigger.name : 'Add Trigger'}
-              options={workflowData.triggers}
-            />
 
-            
-          )}
+
+
+        <div className='mt-8'>
+          <span className='text-3xl'>In</span><br />
+          <span className='text-xl text-[#848694]'>this</span>
+          <div className='py-4'>
+            {workflow.entity.id !== '' ? (
+              <div className="py-1">
+                <StatusCard triggerLabel="Entity" statusLabel={workflow.entity.name} barColor="#BAEDBD" statType={'pipeline'} />
+              </div>
+            ) : (
+              <div className='py-2'>
+                <PipelineDropdown pipelines={pipelineData} />
+              </div>
+            )}
+          </div>
         </div>
 
-        {setupTrigger && (
-          <div className='mt-8'>
-            <span className='text-3xl'>In</span><br />
-            <span className='text-xl text-[#848694]'>this</span>
-            <div className='py-4'>
-              {workflow.entity.id !== '' ? (
-                <div className="py-1">
-                  <StatusCard triggerLabel="Entity" statusLabel={workflow.entity.name} barColor="#BAEDBD" statType={'pipeline'} />
-                </div>
+
+        {
+          setupPipeline &&
+
+          <div className='mt-4'>
+            <div>
+              <span className='text-3xl'>When</span><br />
+              <span className='text-xl text-[#848694]'>this happens</span>
+            </div>
+            <div className="py-5">
+              {workflow.trigger.name !== '' ? (
+                <StatusCard triggerLabel="Trigger" statusLabel={workflow.trigger.name} barColor="#95A4FC" statType={'trigger'} />
               ) : (
-                <div className='py-2'>
-                  <PipelineDropdown pipelines={pipelineData} /> 
-                </div>
+                <OptionsDropdown
+                  title={workflow.trigger.name !== '' ? workflow.trigger.name : 'Add Trigger'}
+                  options={workflowData.triggers}
+                />
               )}
             </div>
           </div>
-        )}
+        }
+
         {setupCondition && (
-          <div className='mt-8'>
+          <div className='mt-4'>
             <span className='text-3xl'>Then</span><br />
             <span className='text-xl text-[#848694]'>do this</span>
             <div className='py-4'>
@@ -66,17 +74,17 @@ const AutomationSettingPanel: React.FC<AutomationSettingPanelProps> = ({ workflo
                 {
                   actions.length == 0 &&
                   <OptionsDropdown
-                  title="Add Action"
-                  options={workflowData.actions}
-                />
+                    title="Add Action"
+                    options={workflowData.actions}
+                  />
                 }
               </div>
 
               <div>
-              {
-                actions.length > 0 &&
-                <StatusCard triggerLabel="Action" statusLabel={actions[actions.length - 1].name} barColor="#B1E3FF" statType={'action'} />
-              }
+                {
+                  actions.length > 0 &&
+                  <StatusCard triggerLabel="Action" statusLabel={actions[actions.length - 1].name} barColor="#B1E3FF" statType={'action'} />
+                }
               </div>
             </div>
           </div>

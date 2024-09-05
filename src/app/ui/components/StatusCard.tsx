@@ -1,9 +1,9 @@
 import React from 'react';
 import { CloseFilled } from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
-import { clearActions, clearConditions, clearWorkflowState, setEntity } from '@/app/slices/workflowSlice';
-import { clearSetupState, setSetupCondition, setSetupPipeline } from '@/app/slices/setupSlice';
-import { Entity, WorkflowState } from '@/app/types/workflowTypes';
+import { clearActions, clearConditions, clearWorkflowState, setEntity, setTrigger } from '@/app/slices/workflowSlice';
+import { clearSetupState, setSetupCondition, setSetupPipeline, setSetupTrigger } from '@/app/slices/setupSlice';
+import { Entity, Trigger, WorkflowState } from '@/app/types/workflowTypes';
 import { setWorkflowDetails } from '@/app/helpers/actions';
 
 interface StatusCardProps {
@@ -16,26 +16,28 @@ interface StatusCardProps {
 const StatusCard: React.FC<StatusCardProps> = ({ triggerLabel, statusLabel, barColor, statType }) => {
   const dispatch = useDispatch();
 
-  const handlePipeline = () => {
-    const updatedDetails: Entity = {
+  const handleTrigger = () => {
+    const updateTrigger: Trigger = {
       id: '',
-      name: ''
+      name: '',
+      type: ''
     };
-    dispatch(setEntity(updatedDetails));
-  };
+
+    dispatch(setTrigger(updateTrigger));
+  }
 
 
   const handleClear = (statType: string) => {
 
     switch (statType) {
-      case 'trigger':
+      case 'pipeline':
         dispatch(clearWorkflowState());
         dispatch(clearSetupState());
         break;
-      case 'pipeline':
-        dispatch(setSetupPipeline(false));
+      case 'trigger':
+        dispatch(setSetupTrigger(false));
         dispatch(setSetupCondition(false));
-        handlePipeline();
+        handleTrigger();
         dispatch(clearConditions());
         dispatch(clearActions());
         break;

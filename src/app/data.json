@@ -64,39 +64,17 @@
       "action": [
         {
           "id": "1",
-          "name": "Send Mail",
+          "name": "gmail",
           "operation": "sendmail",
           "parameter": "text",
-          "setup": false,
-          "data": {
-            "sendTo": "kmr11varun@gmail.com",
-            "subject": "hello",
-            "body": "This is a Test Email"
-          }
+          "setup": false
         },
         {
           "id": "2",
-          "name": "Notify",
-          "operation": "notify",
+          "name": "outlook",
+          "operation": "sendmail",
           "parameter": "text",
-          "setup": false,
-          "data": [
-            {
-              "name": "send To",
-              "type": "email",
-              "value": ["test1@test.com", "test2@test.com"]
-            },
-            {
-              "name": "send To",
-              "type": "email",
-              "value": ["test1@test.com", "test2@test.com"]
-            },
-            {
-              "name": "send To",
-              "type": "email",
-              "value": ["test1@test.com", "test2@test.com"]
-            }
-          ]
+          "setup": false
         }
       ],
       "integration": [
