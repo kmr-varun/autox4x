@@ -15,6 +15,7 @@ import { setSaveWorkflow } from '@/app/slices/setupSlice';
 import { Trigger, WorkflowState } from '@/app/types/workflowTypes';
 import { setWorkflowDetails } from '@/app/slices/workflowSlice';
 import Toaster, { ToasterRef } from '../components/Toaster/Toaster';
+import Popup from '../components/PopUp';
 
 export const workflowData: InputData = data;
 const workflows: Workflow = workflowData.workflow;
@@ -27,6 +28,15 @@ const AutomationPage: React.FC = () => {
 
   const pipelines:Pipeline[]  = pipelineData;
   const dispatch = useDispatch();
+
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const handleButtonClick = () => {
+    setPopupVisible(false); // Close the popup after clicking the button
+  };
+
+  const handleClosePopup = () => {
+    setPopupVisible(false);
+  };
 
   const setupTrigger = useSelector((state: RootState) => state.setup.setupTrigger);
   const setupCondition = useSelector((state: RootState) => state.setup.setupCondition);
@@ -46,6 +56,7 @@ const AutomationPage: React.FC = () => {
     };
     dispatch(setWorkflowDetails(updatedDetails));
     toasterRef?.current?.addToast("Your Automation has been successful saved", "success");
+    setPopupVisible(true);
   }
 
 
@@ -67,7 +78,7 @@ const AutomationPage: React.FC = () => {
             }
 
             {
-              setupCondition && selectActions.length > 0 &&
+              setupCondition && selectActions.length > 0 && !selectActions[selectActions.length -1].setup &&
               <ActionSettings />
             }
             
@@ -79,6 +90,16 @@ const AutomationPage: React.FC = () => {
             <Toaster />
         </div>
         <Toaster ref={toasterRef} />
+
+        {isPopupVisible && (
+        <Popup
+          heading="Successfully Created!"
+          subHeading="Your Automation has been saved & Applied."
+          buttonText="Done"
+          onButtonClick={handleClosePopup}
+          
+        />
+      )}
       </div>
       <Footer />
     </div>

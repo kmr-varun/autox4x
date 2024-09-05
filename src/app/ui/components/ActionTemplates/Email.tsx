@@ -524,7 +524,7 @@ const Email: React.FC = () => {
       }));
     };
 
-    updateAction(0, { data: emaildata });
+    updateAction(0, {setup: true,  data: emaildata });
   };
 
   return (

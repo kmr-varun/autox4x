@@ -2,7 +2,7 @@ import React from 'react';
 import { CloseFilled } from '@carbon/icons-react';
 import { useDispatch } from 'react-redux';
 import { clearActions, clearConditions, clearWorkflowState, setEntity, setTrigger } from '@/app/slices/workflowSlice';
-import { clearSetupState, setSetupCondition, setSetupPipeline, setSetupTrigger } from '@/app/slices/setupSlice';
+import { clearSetupState, setSetupAction, setSetupCondition, setSetupPipeline, setSetupTrigger } from '@/app/slices/setupSlice';
 import { Entity, Trigger, WorkflowState } from '@/app/types/workflowTypes';
 import { setWorkflowDetails } from '@/app/helpers/actions';
 
@@ -41,6 +41,8 @@ const StatusCard: React.FC<StatusCardProps> = ({ triggerLabel, statusLabel, barC
         dispatch(clearConditions());
         dispatch(clearActions());
         break;
+      case 'action':
+        dispatch(setSetupAction(false));
       default:
         console.log("Error");
         break;

@@ -11,6 +11,7 @@ const AutomationPopup: React.FC<AutomationPopUpProps> = ({ onSave, onDiscard }) 
 
   const handleSave = () => {
     onSave({name: name, desc: description});
+    onDiscard();
   };
 
   const handleDiscard = () => {
